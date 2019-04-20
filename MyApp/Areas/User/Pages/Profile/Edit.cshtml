@@ -1,0 +1,22 @@
+﻿@page
+@model MyApp.Areas.User.Pages.Profile.EditModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+}
+
+    <form method="post" enctype="multipart/form-data">
+        <p>
+            <input asp-for="FirstName" />
+        </p>
+        <p>
+            <input asp-for="LastName" />
+        </p>
+        <p>
+            <input asp-for="Email" />
+        </p>
+        <p>
+            <input type="file" asp-for="Image" />
+        </p>
+
+        <button>Submit</button>
+    </form>
