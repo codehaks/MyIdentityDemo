@@ -39,15 +39,21 @@ namespace MyApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<ApplicationUser>()
+            services.AddIdentity<ApplicationUser,IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+            });
 
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AuthorizeAreaFolder("User", "/");
+                    options.Conventions.AuthorizeAreaFolder("Admin", "/", "RequireAdminRole");
+                    
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
