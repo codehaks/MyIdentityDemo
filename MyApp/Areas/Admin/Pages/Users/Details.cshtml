@@ -1,0 +1,19 @@
+﻿@page
+@model MyApp.Areas.Admin.Pages.Users.DetailsModel
+@{
+}
+
+<h1>Profile</h1>
+<hr />
+<img src="@Model.Image" alt="profile" />
+<p>
+    First Name : @Model.FirstName
+</p>
+<p>
+    Last Name : @Model.LastName
+</p>
+<p>
+    Email : @Model.Email
+</p>
+
+<a asp-page="index" >Back to List</a>

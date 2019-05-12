@@ -12,6 +12,7 @@
         <tr>
             <th>#</th>
             <th>UserName</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,9 @@
             <tr>
                 <td>@i</td>
                 <td>@user.UserName</td>
+                <td>
+                    <a asp-page="details" asp-route-userid="@user.Id" class="btn btn-info">Details </a>
+                </td>
             </tr>
             i++;
         }
