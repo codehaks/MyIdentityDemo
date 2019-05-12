@@ -1,0 +1,29 @@
+﻿@page
+@model MyApp.Areas.Admin.Pages.Users.IndexModel
+@{
+    int i = 1;
+}
+
+<h2>Admin</h2>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>UserName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UserList)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@user.UserName</td>
+            </tr>
+            i++;
+        }
+
+
+    </tbody>
+</table>
