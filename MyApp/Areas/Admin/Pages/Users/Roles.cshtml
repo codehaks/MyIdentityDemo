@@ -1,4 +1,30 @@
 ﻿@page
 @model MyApp.Areas.Admin.Pages.Users.RolesModel
 @{
+    int i = 0;
 }
+
+<h2>Roles</h2>
+<hr />
+<form asp-page="roles" method="post">
+    <input asp-for="UserId" hidden />
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Name</th>
+        </tr>
+        @foreach (var item in Model.RoleList)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" name="RoleList[@i].IsInRole" value="@Model.RoleList[i].IsInRole" />
+                    <input type="text" name="RoleList[@i].Name" value="@item.Name" hidden />
+                    @Model.RoleList[i].Name
+                </td>
+            </tr>
+            i++;
+        }
+
+    </table>
+    <button class="btn btn-success">Submit</button>
+</form>

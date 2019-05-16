@@ -20,16 +20,42 @@ namespace MyApp.Areas.Admin.Pages.Users
             _roleManager = roleManager;
         }
 
+        [BindProperty]
+        public IList<RoleViewModel> RoleList { get; set; }
+
+        [BindProperty]
+        public string UserId { get; set; }
+
         public async Task<IActionResult> OnGet(string userId)
         {
-            var user =await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            await _userManager.GetRolesAsync(user);
-            var roles =  _roleManager.Roles.ToList();
-
-            roles
-
+            var userRoles = await _userManager.GetRolesAsync(user);
+            RoleList = _roleManager.Roles
+                .Select(r => new RoleViewModel
+                {
+                    Name = r.Name,
+                    IsInRole = userRoles.Contains(r.Name)
+                })
+                .ToList();
+            UserId = userId;
             return Page();
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            var user = await _userManager.FindByIdAsync(UserId);
+
+            //await _userManager.RemoveFromRolesAsync(user, RoleList.Where(r => r.IsInRole == false).Select(r => r.Name));
+            await _userManager.AddToRolesAsync(user, RoleList.Where(r => r.IsInRole == true).Select(r => r.Name));
+            //await _userManager.UpdateAsync(user);
+            return RedirectToPage("./index");
+        }
+
+        public class RoleViewModel
+        {
+            public string Name { get; set; }
+            public bool IsInRole { get; set; }
         }
     }
 }
