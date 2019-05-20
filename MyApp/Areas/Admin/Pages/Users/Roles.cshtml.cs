@@ -25,6 +25,8 @@ namespace MyApp.Areas.Admin.Pages.Users
 
         [BindProperty]
         public string UserId { get; set; }
+        [BindProperty]
+        public bool IsActive { get; set; }
 
         public async Task<IActionResult> OnGet(string userId)
         {
@@ -47,7 +49,11 @@ namespace MyApp.Areas.Admin.Pages.Users
             var user = await _userManager.FindByIdAsync(UserId);
 
             //await _userManager.RemoveFromRolesAsync(user, RoleList.Where(r => r.IsInRole == false).Select(r => r.Name));
-            await _userManager.AddToRolesAsync(user, RoleList.Where(r => r.IsInRole == true).Select(r => r.Name));
+            await _userManager
+                .AddToRolesAsync(user,
+                    RoleList
+                    .Where(r => r.IsInRole == true)
+                    .Select(r => r.Name));
             //await _userManager.UpdateAsync(user);
             return RedirectToPage("./index");
         }

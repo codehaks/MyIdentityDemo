@@ -1,30 +1,47 @@
 ﻿@page
 @model MyApp.Areas.Admin.Pages.Users.RolesModel
 @{
-    int i = 0;
+    //int i = 0;
+    var list = Model.RoleList;
+
 }
 
 <h2>Roles</h2>
 <hr />
 <form asp-page="roles" method="post">
     <input asp-for="UserId" hidden />
+    <input asp-for="IsActive" type="checkbox"/> Is Active?
     <table class="table">
         <tr>
             <th></th>
             <th>Name</th>
         </tr>
-        @foreach (var item in Model.RoleList)
-        {
+        @for (int i = 0; i < Model.RoleList.Count; i++)
+          {
             <tr>
                 <td>
-                    <input type="checkbox" name="RoleList[@i].IsInRole" value="@Model.RoleList[i].IsInRole" />
-                    <input type="text" name="RoleList[@i].Name" value="@item.Name" hidden />
+                    
+                    @Html.CheckBox("RoleList["+i.ToString()+"].IsInRole",Model.RoleList[@i].IsInRole)
+                    <input type="text" name="RoleList[@i].Name" value="@Model.RoleList[@i].Name" hidden />
                     @Model.RoleList[i].Name
                 </td>
             </tr>
-            i++;
+            //i++;
         }
 
     </table>
     <button class="btn btn-success">Submit</button>
 </form>
+
+@functions{
+    private string IsChecked(bool condition)
+    {
+        if (condition)
+            return "checked";
+        else
+            return string.Empty;
+        {
+
+        }
+    }
+}
