@@ -14,6 +14,7 @@ using MyApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyApp.Models;
+using MyApp.Common;
 
 namespace MyApp
 {
@@ -42,6 +43,8 @@ namespace MyApp
             services.AddIdentity<ApplicationUser,IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, MyUserClaimsPrincipalFactory>();
 
             services.AddAuthorization(options =>
             {
