@@ -13,6 +13,9 @@ namespace MyApp.Common
 
         public GetClaimsFromUser(IHttpContextAccessor accessor)
         {
+            var user = accessor.HttpContext?.User;
+            var userName = user.Identity.Name;
+
             UserId = accessor.HttpContext?.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         }
     }

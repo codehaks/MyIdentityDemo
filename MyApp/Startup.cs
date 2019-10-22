@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyApp.Models;
 using MyApp.Common;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace MyApp
 {
@@ -37,8 +38,8 @@ namespace MyApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, MyUserClaimsPrincipalFactory>();
-            services.AddScoped<IGetClaimsFromUser, GetClaimsFromUser>();
+            services.AddTransient<IUserClaimsPrincipalFactory<ApplicationUser>, MyUserClaimsPrincipalFactory>();
+            services.AddTransient<IGetClaimsFromUser, GetClaimsFromUser>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -46,6 +47,8 @@ namespace MyApp
             services.AddIdentity<ApplicationUser,IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            
 
        
             services.AddAuthorization(options =>
